@@ -1,0 +1,53 @@
+import http from 'http';
+
+const server = http.createServer(async (req, res) => {
+  // async work requests don't block each other
+
+  if(req.url === '/async') {
+    const start = Date.now()
+    console.log(start);
+
+    setTimeout(() => {
+      res.write('async work')
+      res.end(req.url)
+    }, 10000);
+
+    console.log(`it took ${start - Date.now()} seconds`);
+
+  }
+
+  if (req.url === '/fake-async') {
+    // async doesnt work requests block each other
+
+    const start = Date.now();
+
+    while(Date.now() - start < 5000){}
+
+    res.write('fake async doesnt work');
+    res.end('!');
+  }
+
+  if (req.url === '/fake-async-with-await') {
+    // async doesnt work requests block each other
+
+    const start = Date.now();
+    console.log(start);
+
+    async function FakeAsync() {
+      const start = Date.now();
+
+      while(Date.now() - start < 10000){}
+
+      res.write('fake async with await doesnt work either');
+      res.end('!');
+    }
+
+    await FakeAsync();
+
+    console.log(`it took ${start - Date.now()} seconds`);
+  }
+});
+
+server.listen(3013);
+
+console.log('up');
