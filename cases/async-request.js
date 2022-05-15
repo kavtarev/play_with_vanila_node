@@ -16,8 +16,30 @@ const server = http.createServer(async (req, res) => {
 
   }
 
+  if(req.url === '/promise') {
+  // fake async with promise doesn't work
+
+    async function makePromise() {
+      return new Promise(resolve => {
+        const start = Date.now();
+
+        while(Date.now() - start < 5000){}
+        
+        resolve('done')
+      })
+    }
+    console.log('start');
+
+    makePromise().then(result => {
+      res.write(result);
+      res.end('!');
+    })
+
+    console.log('end');
+  }
+
   if (req.url === '/fake-async') {
-    // async doesnt work requests block each other
+    // async doesnt work requests block each other (async at createServer)
 
     const start = Date.now();
 
