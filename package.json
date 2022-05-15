@@ -5,7 +5,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon server.js"
+    "async": "nodemon cases/async-request.js",
+    "sync": "nodemon cases/sync-request.js"
   },
   "keywords": [],
   "author": "",
