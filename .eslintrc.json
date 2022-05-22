@@ -18,6 +18,17 @@
         "no-inner-declarations": "off",
         "no-empty": "off",
         "no-console": "off",
-        "no-shadow": "off"
+        "no-shadow": "off",
+        "no-underscore-dangle": 0,
+        "import/extensions": [
+            "error",
+            "ignorePackages",
+            {
+              "js": "never",
+              "jsx": "never",
+              "ts": "never",
+              "tsx": "never"
+            }
+         ],
     }
 }

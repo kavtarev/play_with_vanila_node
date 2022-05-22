@@ -6,7 +6,9 @@
   "type": "module",
   "scripts": {
     "async": "nodemon cases/async-request.js",
-    "sync": "nodemon cases/sync-request.js"
+    "sync": "nodemon cases/sync-request.js",
+    "pool": "nodemon cases/thred-pool.js",
+    "multy": "nodemon cases/multy-thread/index.js"
   },
   "keywords": [],
   "author": "",
