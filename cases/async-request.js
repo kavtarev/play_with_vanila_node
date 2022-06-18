@@ -1,7 +1,7 @@
 import http from 'http';
 
 const server = http.createServer(async (req, res) => {
-  // async work requests don't block each other
+  // async work requests don't block each other (in different browsers)
 
   if (req.url === '/async') {
     const start = Date.now();
@@ -10,7 +10,7 @@ const server = http.createServer(async (req, res) => {
     setTimeout(() => {
       res.write('async work');
       res.end(req.url);
-    }, 10000);
+    }, 5000);
 
     console.log(`it took ${start - Date.now()} seconds`);
   }
@@ -20,16 +20,20 @@ const server = http.createServer(async (req, res) => {
 
     async function makePromise() {
       return new Promise((resolve) => {
-        const start = Date.now();
-
-        while (Date.now() - start < 5000) {}
-
+        console.log('inside makePromise');
         resolve('done');
       });
     }
+
     console.log('start');
 
-    makePromise().then((result) => {
+    makePromise()
+    .then(res => {
+      const start = Date.now();
+      console.log('inside makePromise then');
+      while (Date.now() - start < 10000) {}
+      return 'hui'
+    }).then((result) => {
       res.write(result);
       res.end('!');
     });
@@ -71,4 +75,4 @@ const server = http.createServer(async (req, res) => {
 
 server.listen(3013);
 
-console.log('up');
+console.log('up on port 3013');
