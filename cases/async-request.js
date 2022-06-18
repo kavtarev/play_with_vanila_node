@@ -31,8 +31,8 @@ const server = http.createServer(async (req, res) => {
     .then(res => {
       const start = Date.now();
       console.log('inside makePromise then');
-      while (Date.now() - start < 10000) {}
-      return 'hui'
+      while (Date.now() - start < 5000) {}
+      return res
     }).then((result) => {
       res.write(result);
       res.end('!');
