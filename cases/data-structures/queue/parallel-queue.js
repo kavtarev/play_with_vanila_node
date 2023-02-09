@@ -45,13 +45,17 @@ ParallelQueue.prototype.dequeue = async function() {
 const boo = new ParallelQueue(2);
 
 try {
-  const [first, second, third] = await Promise.all([
-    boo.enqueue(() => fetch('https://jsonplaceholder.typicode.com/users/1'), 'first'),
-    boo.enqueue(() => fetch('https://jsonplaceholder.typicode.com/users/2'), 'second'),
-    boo.enqueue(() => fetch('https://jsonplaceholder.typicode.com/users/3'), 'third'),
-  ])
+  // const [first, second, third] = await Promise.all([
+  //   boo.enqueue(() => fetch('https://jsonplaceholder.typicode.com/users/1'), 'first'),
+  //   boo.enqueue(() => fetch('https://jsonplaceholder.typicode.com/users/2'), 'second'),
+  //   boo.enqueue(() => fetch('https://jsonplaceholder.typicode.com/users/3'), 'third'),
+  // ])
 
-  console.log(first);
+    const first = await boo.enqueue(() => fetch('https://jsonplaceholder.typicode.com/users/1'), 'first');
+    const second = await  boo.enqueue(() => fetch('https://jsonplaceholder.typicode.com/users/2'), 'second');
+    const third = await boo.enqueue(() => fetch('https://jsonplaceholder.typicode.com/users/3'), 'third');
+
+  console.log(999999, first);
 } catch (e) {
   console.log(e);
 }
