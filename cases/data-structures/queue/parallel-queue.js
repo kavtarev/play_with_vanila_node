@@ -44,18 +44,37 @@ ParallelQueue.prototype.dequeue = async function() {
 
 const boo = new ParallelQueue(2);
 
+async function some(queue) {
+      const first = await queue.enqueue(() => fetch('https://jsonplaceholder.typicode.com/users/1'), 'first');
+      console.log(first);
+}
+
+async function any(queue) {
+      const first = await queue.enqueue(() => fetch('https://jsonplaceholder.typicode.com/users/2'), 'second');
+      console.log(first);
+}
+
+async function foo(queue) {
+      const first = await queue.enqueue(() => fetch('https://jsonplaceholder.typicode.com/users/3'), 'third');
+      console.log(first);
+}
+
 try {
+
+  some(boo)
+  any(boo)
+  foo(boo)
   // const [first, second, third] = await Promise.all([
   //   boo.enqueue(() => fetch('https://jsonplaceholder.typicode.com/users/1'), 'first'),
   //   boo.enqueue(() => fetch('https://jsonplaceholder.typicode.com/users/2'), 'second'),
   //   boo.enqueue(() => fetch('https://jsonplaceholder.typicode.com/users/3'), 'third'),
   // ])
 
-    const first = await boo.enqueue(() => fetch('https://jsonplaceholder.typicode.com/users/1'), 'first');
-    const second = await  boo.enqueue(() => fetch('https://jsonplaceholder.typicode.com/users/2'), 'second');
-    const third = await boo.enqueue(() => fetch('https://jsonplaceholder.typicode.com/users/3'), 'third');
+  //   const first = await boo.enqueue(() => fetch('https://jsonplaceholder.typicode.com/users/1'), 'first');
+  //   const second = await  boo.enqueue(() => fetch('https://jsonplaceholder.typicode.com/users/2'), 'second');
+  //   const third = await boo.enqueue(() => fetch('https://jsonplaceholder.typicode.com/users/3'), 'third');
 
-  console.log(999999, first);
+  // console.log(999999, first);
 } catch (e) {
   console.log(e);
 }
