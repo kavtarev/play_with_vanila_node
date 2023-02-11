@@ -15,13 +15,23 @@
         "@typescript-eslint"
     ],
     "rules": {
-        "no-inner-declarations": "off",
+        "comma-dangle": ["error", "always-multiline"],
         "no-empty": "off",
+        "camelcase": "off",
+        "no-inner-declarations": "off",
+        "no-restricted-syntax":"off",
+        "no-await-in-loop": "off",
+        "no-use-before-define": "off",
+        "no-param-reassign": "off",
+        "no-unused-vars": "warn",
         "no-console": "off",
         "no-shadow": "off",
         "no-underscore-dangle": 0,
+        "import/prefer-default-export": "off",
+        "func-names": "off",
+        "max-classes-per-file": "off",
         "import/extensions": [
-            "error",
+            "off",
             "ignorePackages",
             {
               "js": "never",
@@ -29,6 +39,6 @@
               "ts": "never",
               "tsx": "never"
             }
-         ],
+        ]
     }
 }

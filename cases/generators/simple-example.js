@@ -1,5 +1,5 @@
-function *SimpleGenerator(array) {
-  while(array.length) {
+function* SimpleGenerator(array) {
+  while (array.length) {
     yield array.pop();
   }
 }
@@ -7,4 +7,3 @@ function *SimpleGenerator(array) {
 for (const item of SimpleGenerator([1, 2])) {
   console.log(item);
 }
-

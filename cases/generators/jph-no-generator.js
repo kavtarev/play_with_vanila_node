@@ -1,8 +1,8 @@
 async function wait(ms) {
-  return new Promise(res => {
-    setTimeout(() => res(1), ms)
-  })
-};
+  return new Promise((res) => {
+    setTimeout(() => res(1), ms);
+  });
+}
 
 async function jphGenerator() {
   const phones = [];
@@ -10,13 +10,13 @@ async function jphGenerator() {
   let phone = await getPhone(page);
 
   while (phone) {
-    phones.push(phone)
+    phones.push(phone);
     await wait(1000);
-    page += 1
+    page += 1;
     phone = await getPhone(page);
   }
 
-  return phones
+  return phones;
 }
 
 async function getPhone(page) {

@@ -9,5 +9,3 @@ class Service_2 {
 }
 
 export default new Service_2();
-
-

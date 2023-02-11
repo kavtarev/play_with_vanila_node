@@ -9,9 +9,9 @@ export class ParallelQueue extends AutoQueue {
   }
 }
 
-ParallelQueue.prototype.dequeue = async function() {
+ParallelQueue.prototype.dequeue = async function () {
   console.log('queue length', this.queue.queue.length);
-  console.log('names in', this.queue.queue.map(item => item.name));
+  console.log('names in', this.queue.queue.map((item) => item.name));
   console.log('running process ', this.running);
   if (this.running >= this.limit) {
     console.log('limit is reached, wait in queue');
@@ -29,41 +29,39 @@ ParallelQueue.prototype.dequeue = async function() {
   try {
     this.running += 1;
     const res = await item.cb();
-    let roo = await res.json();
+    const roo = await res.json();
     console.log(item.name, roo.id);
     item.resolve(roo.id);
-    console.log(item.name + ': amount of running processes ' + this.running);
-
-  } catch(e) {
+    console.log(`${item.name}: amount of running processes ${this.running}`);
+  } catch (e) {
     item.reject(e);
   } finally {
     this.running -= 1;
-    this.dequeue()
+    this.dequeue();
   }
-}
+};
 
 const boo = new ParallelQueue(2);
 
 async function some(queue) {
-      const first = await queue.enqueue(() => fetch('https://jsonplaceholder.typicode.com/users/1'), 'first');
-      console.log(first);
+  const first = await queue.enqueue(() => fetch('https://jsonplaceholder.typicode.com/users/1'), 'first');
+  console.log(first);
 }
 
 async function any(queue) {
-      const first = await queue.enqueue(() => fetch('https://jsonplaceholder.typicode.com/users/2'), 'second');
-      console.log(first);
+  const first = await queue.enqueue(() => fetch('https://jsonplaceholder.typicode.com/users/2'), 'second');
+  console.log(first);
 }
 
 async function foo(queue) {
-      const first = await queue.enqueue(() => fetch('https://jsonplaceholder.typicode.com/users/3'), 'third');
-      console.log(first);
+  const first = await queue.enqueue(() => fetch('https://jsonplaceholder.typicode.com/users/3'), 'third');
+  console.log(first);
 }
 
 try {
-
-  some(boo)
-  any(boo)
-  foo(boo)
+  some(boo);
+  any(boo);
+  foo(boo);
   // const [first, second, third] = await Promise.all([
   //   boo.enqueue(() => fetch('https://jsonplaceholder.typicode.com/users/1'), 'first'),
   //   boo.enqueue(() => fetch('https://jsonplaceholder.typicode.com/users/2'), 'second'),

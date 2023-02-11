@@ -2,14 +2,13 @@ export class BasicQueue {
   queue = [];
 }
 
-BasicQueue.prototype.enqueue = function(item) {
+BasicQueue.prototype.enqueue = function (item) {
   this.queue.push(item);
-}
+};
 
-BasicQueue.prototype.dequeue = function(item) {
+BasicQueue.prototype.dequeue = function (item) {
   return this.queue.shift(item);
-}
-
+};
 
 // const q = new BasicQueue();
 

@@ -28,15 +28,15 @@ const server = http.createServer(async (req, res) => {
     console.log('start');
 
     makePromise()
-    .then(res => {
-      const start = Date.now();
-      console.log('inside makePromise then');
-      while (Date.now() - start < 5000) {}
-      return res
-    }).then((result) => {
-      res.write(result);
-      res.end('!');
-    });
+      .then((res) => {
+        const start = Date.now();
+        console.log('inside makePromise then');
+        while (Date.now() - start < 5000) {}
+        return res;
+      }).then((result) => {
+        res.write(result);
+        res.end('!');
+      });
 
     console.log('end');
   }

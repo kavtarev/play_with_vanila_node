@@ -6,11 +6,13 @@ export class AutoQueue {
   }
 }
 
-AutoQueue.prototype.enqueue = function(cb, name) {
+AutoQueue.prototype.enqueue = function (cb, name) {
   return new Promise((resolve, reject) => {
-    this.queue.enqueue({ cb, resolve, reject, name });
+    this.queue.enqueue({
+      cb, resolve, reject, name,
+    });
     this.dequeue();
-  })
-}
+  });
+};
 
-AutoQueue.prototype.dequeue = function() {}
+AutoQueue.prototype.dequeue = function () {};

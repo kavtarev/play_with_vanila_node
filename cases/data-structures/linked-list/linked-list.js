@@ -12,9 +12,9 @@ class LinkedList {
 
     while (temp.next) {
       i += 1;
-      temp = temp.next
+      temp = temp.next;
     }
-    
+
     return i;
   }
 
@@ -26,7 +26,7 @@ class LinkedList {
     }
 
     while (index > 1 && temp.next !== null) {
-      temp = temp.next
+      temp = temp.next;
       index -= 1;
     }
 
@@ -37,7 +37,7 @@ class LinkedList {
   printData() {
     let temp = this.head;
 
-    while(temp !== null) {
+    while (temp !== null) {
       console.log(temp.data);
       temp = temp.next;
     }
@@ -51,7 +51,7 @@ class LinkedListNode {
   }
 }
 
-let oneWayList = new LinkedList();
+const oneWayList = new LinkedList();
 
 const first = new LinkedListNode(1);
 const second = new LinkedListNode(2);
@@ -62,6 +62,5 @@ oneWayList.addNode(first);
 oneWayList.addNode(second);
 oneWayList.addNode(third);
 
-
 oneWayList.insert(fourth, 1);
-oneWayList.printData()
+oneWayList.printData();
