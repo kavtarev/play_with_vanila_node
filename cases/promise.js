@@ -17,6 +17,7 @@ class MyPromise {
     try {
       func(this.#resolve.bind(this), this.#reject.bind(this));
     } catch (e) {
+      this.#reject(e).bind(this);
     }
   }
 
@@ -50,25 +51,64 @@ class MyPromise {
     }
   }
 
-  then(res, _) {
-    console.log(this.#resolveCbs);
-    this.#resolveCbs.push(res);
-    console.log(this.#resolveCbs);
+  then(res, rej) {
+    return new MyPromise((resolve, reject) => {
+      if (this.status === MyPromiseStatus.pending) {
+        if (res) {
+          this.#resolveCbs.push(() => {
+            try {
+              resolve(res(this.result));
+            } catch (e) {
+              reject(e);
+            }
+          });
+        }
+        if (rej) {
+          this.#rejectCbs.push(() => {
+            try {
+              reject(rej(this.result));
+            } catch (e) {
+              reject(e);
+            }
+          });
+        }
+      }
+      if (this.status === MyPromiseStatus.fulfilled) {
+        try {
+          resolve(res(this.result));
+        } catch (e) {
+          reject(e);
+        }
+        // this.#resolveCbs.push(res);
+      } if (rej && this.status === MyPromiseStatus.fulfilled) {
+        try {
+          reject(rej(this.result));
+        } catch (e) {
+          reject(e);
+        }
+      }
+    });
+  }
 
-    this.#runCb();
-    // rej && this.#rejectCbs.push(rej);
-    return new MyPromise((res) => this.value);
+  catch(rej) {
+    this.then(null, rej);
   }
 }
 
-const dope = new MyPromise((res, rej) => {
-  setTimeout(() => res({ a: 56 }), 1000);
-})
-  .then((res) => {
-    res.toString();
-    console.log(23423432, res);
-  });
+// const dope = new MyPromise((res, rej) => {
+//   setTimeout(() => res({ a: 56 }), 1000);
+// })
+//   .then((res) => {
+//     res.n = 10_00;
+//     console.log(23423432, res);
+//   });
 
-console.log(dope.result);
-console.log(dope.status);
-console.log(dope);
+const doom = new MyPromise((res) => setTimeout(() => res('hi'), 500));
+const doom2 = new MyPromise((res) => res('hi'));
+doom2.then((res) => `${res} 1`)
+  .then((res) => `${res} 2`)
+  .then((res) => console.log(res));
+
+// console.log(dope.result);
+// console.log(dope.status);
+// console.log(dope);
